@@ -62,7 +62,7 @@ test('generates one page with a multiple text field of category "contact"', () =
         }]
     };
 
-    expect(pageConfig).not.toEqual(expectedPageConfig);
+    expect(pageConfig).toEqual(expectedPageConfig);
 });
 
 
