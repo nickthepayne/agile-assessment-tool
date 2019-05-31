@@ -1,4 +1,10 @@
-import * as QuestionType from './QuestionType';
+export const questionType = {
+  RADIO: 'radiogroup',
+  TEXT: 'text',
+  DROPDOWN: 'dropdown',
+  RATING: 'rating',
+  MULTIPLE_TEXT: 'multipletext',
+};
 
 const generateQuestionConfig = (question) => {
   const questionConfig = {
@@ -20,11 +26,11 @@ const generateQuestionConfig = (question) => {
     questionConfig.colCount = question.colCount;
   }
 
-  if (question.type === QuestionType.RADIO || question.type === QuestionType.DROPDOWN) {
+  if (question.type === questionType.RADIO || question.type === questionType.DROPDOWN) {
     questionConfig.choices = question.choices;
   }
 
-  if (question.type === QuestionType.MULTIPLE_TEXT) {
+  if (question.type === questionType.MULTIPLE_TEXT) {
     questionConfig.items = question.items;
   }
 
@@ -33,7 +39,7 @@ const generateQuestionConfig = (question) => {
   }
 
   return questionConfig;
-}
+};
 
 // eslint-disable-next-line import/prefer-default-export
 export const generateSurveyConfig = (config) => ({

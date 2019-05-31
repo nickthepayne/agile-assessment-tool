@@ -1,11 +1,10 @@
-import { generateSurveyConfig } from './configGenerator';
-import * as QuestionType from './QuestionType';
+import { generateSurveyConfig, questionType } from './surveyConfig';
 
 test('generates complete survey config given a config', () => {
   // given
   const category = 'contact';
   const question = 'Enter your contact details';
-  const type = QuestionType.TEXT;
+  const type = questionType.TEXT;
 
   const config = {
     pages: [
@@ -47,7 +46,7 @@ test('generates complete survey config given a config', () => {
 test('generates conditional questions if given visibleIf param', () => {
   // given
   const triggerQuestion = {
-    type: QuestionType.RADIO,
+    type: questionType.RADIO,
     question: 'Do you use Scrum?',
     category: 'scrum',
     name: 'ifScrum',
@@ -56,7 +55,7 @@ test('generates conditional questions if given visibleIf param', () => {
   };
 
   const conditionalQuestion = {
-    type: QuestionType.RADIO,
+    type: questionType.RADIO,
     question: 'How often do you reach your sprint goals?',
     category: 'scrum',
     visibleIf: '{srcum__ifScrum}="Yes"',
@@ -81,14 +80,14 @@ test('generates conditional questions if given visibleIf param', () => {
       {
         questions: [
           {
-            type: QuestionType.RADIO,
+            type: questionType.RADIO,
             name: 'scrum__ifScrum',
             title: 'Do you use Scrum?',
             choices: ['Yes', 'No'],
             colCount: 0,
           },
           {
-            type: QuestionType.RADIO,
+            type: questionType.RADIO,
             name: 'scrum__How often do you reach your sprint goals?',
             title: 'How often do you reach your sprint goals?',
             visibleIf: '{srcum__ifScrum}="Yes"',

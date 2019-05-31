@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import uuidv1 from 'uuid/v1';
-import { generateSurveyConfig } from './config/configGenerator';
+import { generateSurveyConfig } from './config/surveyConfig';
 import { evaluateScore } from './components/Result/evaluation/scoreEvaluator';
 
 import Header from './components/Header';
