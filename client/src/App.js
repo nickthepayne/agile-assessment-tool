@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import uuidv1 from 'uuid/v1';
 import { generateSurveyConfig } from './config/surveyConfig';
-import { evaluateScore } from './components/Result/evaluation/scoreEvaluator';
+import { evaluateScore } from './utils/scoreEvaluator';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
 import FootNote from './components/FootNote';
 import AgileAssessment from './components/AgileAssessment';
-import Result from './components/Result/Result';
+import Result from './components/Result';
 
 const PageState = {
   SURVEY: 'SURVEY',

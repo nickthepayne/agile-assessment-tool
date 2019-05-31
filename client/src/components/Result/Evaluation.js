@@ -1,29 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Tippy from '@tippy.js/react';
-import categoryInformation from './categoryInformation';
+import scoreDescriptors from './scoreDescriptors';
 
-import '../../../styles/evaluation.scss';
+import '../../styles/evaluation.scss';
 
 const calculateScore = (total, max) => (100 * total) / max;
 
 const getDescriptor = (evaluation) => {
-  if (!(evaluation.name in categoryInformation)) {
+  if (!(evaluation.name in scoreDescriptors)) {
     return '';
   }
 
   const score = calculateScore(evaluation.total, evaluation.max);
 
   if (score <= 25) {
-    return categoryInformation[evaluation.name][25];
+    return scoreDescriptors[evaluation.name][25];
   }
   if (score <= 50) {
-    return categoryInformation[evaluation.name][50];
+    return scoreDescriptors[evaluation.name][50];
   }
   if (score <= 75) {
-    return categoryInformation[evaluation.name][75];
+    return scoreDescriptors[evaluation.name][75];
   }
-  return categoryInformation[evaluation.name][100];
+  return scoreDescriptors[evaluation.name][100];
 };
 
 const Evaluation = ({ evaluations }) => (
@@ -39,7 +39,7 @@ const Evaluation = ({ evaluations }) => (
             <div key={item.name} className="scores-container">
               <div className="category-label">{item.name}</div>
               <Tippy
-                enabled={item.name in categoryInformation && !!getDescriptor(item)}
+                enabled={item.name in scoreDescriptors && !!getDescriptor(item)}
                 content={getDescriptor(item)}
               >
                 <div className={`${item.name} score-bar-container`}>
