@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import uuidv1 from 'uuid/v1';
-import { generateSurveyConfig } from './surveyconfig/configGenerator';
-import { evaluateScore } from './result/evaluation/scoreEvaluator';
+import { generateSurveyConfig } from './components/surveyconfig/configGenerator';
+import { evaluateScore } from './components/Result/evaluation/scoreEvaluator';
 
-import Header from './Header';
-import Footer from './Footer';
-import FootNote from './FootNote';
-import AgileAssessment from './AgileAssessment';
-import Result from './result/Result';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import FootNote from './components/FootNote';
+import AgileAssessment from './components/AgileAssessment';
+import Result from './components/Result/Result';
 
 const PageState = {
   SURVEY: 'SURVEY',
