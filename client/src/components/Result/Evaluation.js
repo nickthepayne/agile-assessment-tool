@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Tippy from '@tippy.js/react';
-import scoreDescriptors from './scoreDescriptors';
+import scoreDescriptors from '../../assets/scoreDescriptors';
 
 import '../../styles/evaluation.scss';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import profiles from './profiles';
+import profiles from '../../assets/profiles';
 
 const profilePics = require.context('../../assets/images/profile', true);
 

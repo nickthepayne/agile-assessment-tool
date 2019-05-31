@@ -1,5 +1,5 @@
 import React from 'react';
-import links from './links';
+import links from '../../assets/links';
 
 export const getRandomLinks = (number) => {
   const allLinks = [
