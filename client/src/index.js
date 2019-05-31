@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import registerServiceWorker from './config/registerServiceWorker';
 import './styles/lib/zuehlke.min.css';
 import './styles/index.scss';
-import { polyFillUrlSearchParamForEdge } from './api';
+import { polyFillUrlSearchParamForEdge } from './config/api';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
