@@ -3,6 +3,8 @@ import axios from 'axios';
 import uuidv1 from 'uuid/v1';
 import { generateSurveyConfig } from './config/surveyConfig';
 import { evaluateScore } from './utils/scoreEvaluator';
+import Analytics from './utils/analytics';
+
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -30,6 +32,8 @@ export default class App extends Component {
   }
 
   async componentDidMount() {
+    Analytics.setUp();
+
     try {
       if (!this.surveyConfig) {
         const urlParams = new URLSearchParams(window.location.search);
