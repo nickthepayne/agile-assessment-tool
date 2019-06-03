@@ -1,7 +1,8 @@
 import React from 'react';
-import { ValidationErrors, getValidationResult } from './feedbackValidator';
+import PropTypes from 'prop-types';
+import { ValidationErrors, getValidationResult } from '../../utils/feedbackValidator';
 
-export default class Feedback extends React.Component {
+class Feedback extends React.Component {
   constructor(props) {
     super(props);
 
@@ -153,3 +154,9 @@ export default class Feedback extends React.Component {
     );
   }
 }
+
+Feedback.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
+
+export default Feedback;

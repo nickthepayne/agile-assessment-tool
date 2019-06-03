@@ -1,7 +1,7 @@
 import React from 'react';
-import profiles from './profiles';
+import profiles from '../../assets/profiles';
 
-const profilePics = require.context('../../../assets/images/profile', true);
+const profilePics = require.context('../../assets/images/profile', true);
 
 export default () => (
   <div className="contacts">

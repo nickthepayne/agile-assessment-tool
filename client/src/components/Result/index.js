@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import Evaluation from './evaluation/Evaluation';
-import Link from './link/Link';
-import Profile from './profile/Profile';
+import Evaluation from './Evaluation';
+import Link from './Link';
+import Profile from './Profile';
 import '../../styles/result.scss';
-import Feedback from './feedback/Feedback';
+import Feedback from './Feedback';
 
 class Result extends React.Component {
   constructor(props) {
@@ -44,7 +44,10 @@ class Result extends React.Component {
               <h3 className="color-primary">Thank you for participating!</h3>
               {evaluations && <Evaluation evaluations={evaluations} />}
               <Feedback onSubmit={(feedback) => this.onSubmitFeedback(feedback)} />
-              <Link />
+              {
+                /* eslint-disable-next-line jsx-a11y/anchor-is-valid */
+                <Link />
+              }
             </div>
             <Profile />
           </div>
@@ -56,6 +59,7 @@ class Result extends React.Component {
 
 Result.propTypes = {
   evaluations: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  surveyId: PropTypes.string.isRequired,
 };
 
 export default Result;
