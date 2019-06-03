@@ -20,7 +20,7 @@ export default () => (
             <ul className="zue-footer-list">
               <li>
                 <a href="http://www.zuehlke.com/ch/en/markettrends/" rel="noopener">
-                  Markettrends
+                  Market Trends
                 </a>
               </li>
 
