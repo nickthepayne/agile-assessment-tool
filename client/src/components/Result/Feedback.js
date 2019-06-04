@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ValidationErrors, getValidationResult } from '../../utils/feedbackValidator';
+import Analytics from '../../utils/analytics';
 
 class Feedback extends React.Component {
   constructor(props) {
@@ -13,6 +14,11 @@ class Feedback extends React.Component {
       privacyAgreement: false,
       validation: {},
     };
+  }
+
+  async componentDidMount() {
+    Analytics.viewPage('/feedback');
+    Analytics.event('completed', 'survey');
   }
 
   async handleSubmit(event) {
