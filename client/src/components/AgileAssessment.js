@@ -13,10 +13,6 @@ import 'bootstrap-slider/dist/css/bootstrap-slider.css';
 import 'select2/dist/js/select2.js';
 
 class AgileAssessment extends React.Component {
-  componentWillMount() {
-    import('icheck');
-  }
-
   shouldComponentUpdate() {
     const { config } = this.props;
     return !config;
