@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import Evaluation from './Evaluation';
-import Link from './Link';
+import AgileLinks from './AgileLinks';
 import Profile from './Profile';
 import Feedback from './Feedback';
 import { evaluateScore } from '../../utils/scoreEvaluator';
@@ -69,10 +69,7 @@ class Result extends React.Component {
               <h3 className="color-primary">Thank you for participating!</h3>
               {evaluations && <Evaluation evaluations={evaluations} />}
               <Feedback onSubmit={(feedback) => this.onSubmitFeedback(feedback)} />
-              {
-                /* eslint-disable-next-line jsx-a11y/anchor-is-valid */
-                <Link />
-              }
+              <AgileLinks />
             </div>
             <Profile />
           </div>
