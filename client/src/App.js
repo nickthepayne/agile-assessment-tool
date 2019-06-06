@@ -79,12 +79,6 @@ export default class App extends Component {
   }
 
   onValueChange() {
-    const { showBanner } = this.state;
-
-    if (!showBanner) {
-      return;
-    }
-
     this.setState((prevState) => ({
       ...prevState,
       showBanner: false,
