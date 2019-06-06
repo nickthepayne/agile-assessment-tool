@@ -78,13 +78,6 @@ export default class App extends Component {
     }
   }
 
-  onStart() {
-    this.setState((prevState) => ({
-      ...prevState,
-      pageState: PageState.SURVEY,
-    }));
-  }
-
   onValueChange() {
     const { showBanner } = this.state;
 
