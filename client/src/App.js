@@ -15,7 +15,7 @@ import Result from './components/Result';
 const PageState = {
   SURVEY: 'SURVEY',
   EVALUATION: 'EVALUATION',
-  SAVING_RESULT: 'SAVING_RESULT',
+  LOADING: 'LOADING',
 };
 
 export default class App extends Component {
@@ -61,7 +61,7 @@ export default class App extends Component {
 
       this.setState((prevState) => ({
         ...prevState,
-        pageState: PageState.SAVING_RESULT,
+        pageState: PageState.LOADING,
       }));
 
       await axios.post('api/survey', surveyResult);
@@ -91,7 +91,7 @@ export default class App extends Component {
     switch (pageState) {
     case PageState.EVALUATION:
       return <Result evaluations={evaluations} surveyId={surveyId} />;
-    case PageState.SAVING_RESULT:
+    case PageState.LOADING:
       return <div className="spinner">&nbsp;</div>;
     default:
       return (
