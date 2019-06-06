@@ -22,7 +22,7 @@ export const getRandomLinks = (number) => {
 export default () => {
   const linksToDisplay = getRandomLinks(4);
   return (
-    <div className="linkSection">
+    <div className="linkSection zue-teaser-medium-boxes zue-boxes-container">
       <h3 className="color-primary">Find out more about Agile</h3>
       <ul className="medium-block-grid-2">
         {linksToDisplay.map((item) => (

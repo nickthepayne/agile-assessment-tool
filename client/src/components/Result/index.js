@@ -38,7 +38,7 @@ class Result extends React.Component {
           this.scrollRef = ref;
         }}
       >
-        <div className="github-content mobile-padding row zue-teaser-medium-boxes zue-boxes-container ng-scope">
+        <div className="github-content row">
           <div className="result-content">
             <div className="result-left">
               <h3 className="color-primary">Thank you for participating!</h3>
