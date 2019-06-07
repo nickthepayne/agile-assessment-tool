@@ -1,4 +1,5 @@
 import React from 'react';
+import logo from '../assets/images/logo-zuhlke.svg';
 
 export default () => (
   <div>
@@ -33,13 +34,7 @@ export default () => (
           <div className="row">
             <div className="small-12 medium-2 columns">
               <a href="http://zuehlke.com/" className="zue-logo-foot-wrap">
-                <img
-                  className="zue-logo-foot"
-                  alt="Zühlke"
-                  // eslint-disable-next-line global-require
-                  src={require('../assets/images/logo-zuhlke.svg')}
-                  style={{ width: '120px' }}
-                />
+                <img className="zue-logo-foot" alt="Zühlke" src={logo} style={{ width: '120px' }} />
               </a>
             </div>
             <div className="small-12 medium-4 columns">
