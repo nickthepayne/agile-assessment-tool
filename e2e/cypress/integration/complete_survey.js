@@ -31,6 +31,10 @@ describe('Complete Survey', () => {
     );
   });
 
+  it('should display footnote on page load', () => {
+    cy.contains('we create solutions that satisfy our customers. We develop').should('be.visible');
+  });
+
   it('display 3rd question on selecting answers and going to the next page', () => {
     cy.contains('Mostly Agile').click();
     cy.contains('Somewhat happy').click();

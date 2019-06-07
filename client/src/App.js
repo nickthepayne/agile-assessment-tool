@@ -6,7 +6,6 @@ import Analytics from './utils/analytics';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
-import FootNote from './components/FootNote';
 import AgileAssessment from './components/AgileAssessment';
 import Result from './components/Result';
 
@@ -113,7 +112,6 @@ export default class App extends Component {
       <div id="outer">
         <Header showBanner={showBanner} />
         {content}
-        <FootNote />
         <Footer />
       </div>
     );
