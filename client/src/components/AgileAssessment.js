@@ -12,15 +12,25 @@ import 'bootstrap-slider/dist/css/bootstrap-slider.css';
 // eslint-disable-next-line import/extensions
 import 'select2/dist/js/select2.js';
 
+const insertRecaptchaScript = () => {
+  const script = document.createElement('script');
+  script.src = 'https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit';
+  script.async = true;
+  script.defer = true;
+  document.body.appendChild(script);
+};
+
 class AgileAssessment extends React.Component {
-  componentDidMount() {
-    const script = document.createElement('script');
+  constructor(props) {
+    super(props);
 
-    script.src = 'https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit';
-    script.async = true;
-    script.defer = true;
+    const { config } = this.props;
 
-    document.body.appendChild(script);
+    this.state = {
+      model: new Survey.Model(config),
+    };
+
+    this.handleCurrentPageChanged = this.handleCurrentPageChanged.bind(this);
   }
 
   shouldComponentUpdate() {
@@ -28,17 +38,32 @@ class AgileAssessment extends React.Component {
     return !config;
   }
 
+  handleCurrentPageChanged() {
+    if (this.isOnLastPage()) {
+      insertRecaptchaScript();
+    }
+  }
+
+  isOnLastPage() {
+    const { model } = this.state;
+    return model.currentPageNo === model.pageCount - 1;
+  }
+
   render() {
     Survey.Survey.cssType = 'bootstrap';
 
-    const { config, onComplete, onValueChange } = this.props;
-
-    const model = new Survey.Model(config);
+    const { onComplete, onValueChange } = this.props;
+    const { model } = this.state;
 
     return (
       <div id="pagecontent">
         <div className="github-content mobile-padding row zue-teaser-medium-boxes zue-boxes-container ng-scope">
-          <Survey.Survey model={model} onComplete={onComplete} onValueChanged={onValueChange} />
+          <Survey.Survey
+            model={model}
+            onComplete={onComplete}
+            onCurrentPageChanged={this.handleCurrentPageChanged}
+            onValueChanged={onValueChange}
+          />
         </div>
       </div>
     );

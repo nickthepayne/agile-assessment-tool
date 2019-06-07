@@ -47,11 +47,6 @@
               "text": "Very unhappy"
             }
           ]
-        },
-        {
-          "type": "html",
-          "name": "recaptcha",
-          "html": "<div id='recaptcha'></div>"
         }
       ]
     },
@@ -134,18 +129,24 @@
     },
     {
       "questions": [{
-        "type": "multipletext",
-        "question": "Optionally, you can leave some contact data here.",
-        "description": "We would love to work with you!",
-        "category": "contact",
-        "items": [{
-            "name": "Company Name"
-          },
-          {
-            "name": "Email"
-          }
-        ]
-      }]
+          "type": "multipletext",
+          "question": "Optionally, you can leave some contact data here.",
+          "description": "We would love to work with you!",
+          "category": "contact",
+          "items": [{
+              "name": "Company Name"
+            },
+            {
+              "name": "Email"
+            }
+          ]
+        },
+        {
+          "type": "html",
+          "name": "recaptcha",
+          "html": "<div id='recaptcha'></div>"
+        }
+      ]
     }
   ]
 }
