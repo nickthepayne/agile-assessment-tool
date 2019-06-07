@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import uuidv1 from 'uuid/v1';
 import { generateSurveyConfig } from './config/surveyConfig';
-import { evaluateScore } from './utils/scoreEvaluator';
 import Analytics from './utils/analytics';
-
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -15,7 +13,7 @@ import Result from './components/Result';
 const PageState = {
   SURVEY: 'SURVEY',
   EVALUATION: 'EVALUATION',
-  SAVING_RESULT: 'SAVING_RESULT',
+  LOADING: 'LOADING',
 };
 
 export default class App extends Component {
@@ -23,17 +21,72 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      pageState: PageState.SURVEY,
-      evaluation: undefined,
-      surveyConfig: undefined,
+      pageState: PageState.LOADING,
       showBanner: true,
-      surveyId: uuidv1(),
+      surveyConfig: undefined,
+      surveyResult: undefined,
     };
+
+    this.loadSurveyConfig();
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     Analytics.setUp();
+  }
 
+  onComplete(result) {
+    this.setState((prevState) => ({
+      ...prevState,
+      pageState: PageState.LOADING,
+    }));
+
+    const surveyResult = {
+      id: uuidv1(),
+      ...result.data,
+    };
+
+    try {
+      axios.post('api/survey', surveyResult);
+    } catch (err) {
+      console.error(err);
+    }
+
+    this.setState((prevState) => ({
+      ...prevState,
+      surveyResult,
+      pageState: PageState.EVALUATION,
+    }));
+  }
+
+  onValueChange() {
+    this.setState((prevState) => ({
+      ...prevState,
+      showBanner: false,
+    }));
+  }
+
+  getContent() {
+    const { pageState, surveyConfig, surveyResult } = this.state;
+
+    switch (pageState) {
+    case PageState.EVALUATION:
+      return <Result surveyResult={surveyResult} />;
+    case PageState.LOADING:
+      return <div className="spinner">&nbsp;</div>;
+    default:
+      return (
+        surveyConfig && (
+          <AgileAssessment
+            config={surveyConfig}
+            onComplete={(result) => this.onComplete(result)}
+            onValueChange={() => this.onValueChange()}
+          />
+        )
+      );
+    }
+  }
+
+  async loadSurveyConfig() {
     try {
       if (!this.surveyConfig) {
         const urlParams = new URLSearchParams(window.location.search);
@@ -49,75 +102,6 @@ export default class App extends Component {
       }
     } catch (err) {
       console.error(err);
-    }
-  }
-
-  async onComplete(result) {
-    const { surveyId } = this.state;
-
-    try {
-      const surveyResult = result.data;
-      surveyResult.id = surveyId;
-
-      this.setState((prevState) => ({
-        ...prevState,
-        pageState: PageState.SAVING_RESULT,
-      }));
-
-      await axios.post('api/survey', surveyResult);
-
-      const evaluations = evaluateScore(surveyResult);
-
-      this.setState((prevState) => ({
-        ...prevState,
-        evaluations,
-        pageState: PageState.EVALUATION,
-      }));
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  onStart() {
-    this.setState((prevState) => ({
-      ...prevState,
-      pageState: PageState.SURVEY,
-    }));
-  }
-
-  onValueChange() {
-    const { showBanner } = this.state;
-
-    if (!showBanner) {
-      return;
-    }
-
-    this.setState((prevState) => ({
-      ...prevState,
-      showBanner: false,
-    }));
-  }
-
-  getContent() {
-    const { pageState, evaluations, surveyId, surveyConfig } = this.state;
-
-    switch (pageState) {
-    case PageState.EVALUATION:
-      return <Result evaluations={evaluations} surveyId={surveyId} />;
-    case PageState.SAVING_RESULT:
-      return <div className="spinner">&nbsp;</div>;
-    default:
-      return (
-        <div>
-          {surveyConfig && (
-            <AgileAssessment
-              config={surveyConfig}
-              onComplete={(result) => this.onComplete(result)}
-              onValueChange={() => this.onValueChange()}
-            />
-          )}
-        </div>
-      );
     }
   }
 

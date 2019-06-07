@@ -1,4 +1,4 @@
-import { getRandomLinks } from './Link';
+import { getRandomLinks } from './AgileLinks';
 
 test('when request three links, return three links.', () => {
   // when

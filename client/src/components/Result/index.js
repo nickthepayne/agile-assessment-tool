@@ -2,15 +2,39 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import Evaluation from './Evaluation';
-import Link from './Link';
+import AgileLinks from './AgileLinks';
 import Profile from './Profile';
-import '../../styles/result.scss';
 import Feedback from './Feedback';
+import { evaluateScore } from '../../utils/scoreEvaluator';
+
+import '../../styles/result.scss';
 
 class Result extends React.Component {
   constructor(props) {
     super(props);
+
     this.scrollRef = React.createRef();
+
+    this.state = {
+      evaluations: undefined,
+      contact: undefined,
+    };
+  }
+
+  componentWillMount() {
+    const { surveyResult } = this.props;
+
+    const evaluations = evaluateScore(surveyResult);
+
+    const contact = Object.keys(surveyResult)
+      .filter((key) => key.split('__')[0] === 'contact')
+      .map((key) => (surveyResult[key]))[0];
+
+    this.setState((prevState) => ({
+      ...prevState,
+      evaluations,
+      contact,
+    }));
   }
 
   componentDidMount() {
@@ -25,12 +49,13 @@ class Result extends React.Component {
   }
 
   async onSubmitFeedback(feedback) {
-    const { surveyId } = this.props;
-    await axios.post('api/feedback', { ...feedback, surveyId });
+    const { surveyResult } = this.props;
+    await axios.post('api/feedback', { ...feedback, surveyId: surveyResult.id });
   }
 
   render() {
-    const { evaluations } = this.props;
+    const { evaluations, contact } = this.state;
+    console.log(contact);
     return (
       <div
         id="pagecontent"
@@ -44,10 +69,7 @@ class Result extends React.Component {
               <h3 className="color-primary">Thank you for participating!</h3>
               {evaluations && <Evaluation evaluations={evaluations} />}
               <Feedback onSubmit={(feedback) => this.onSubmitFeedback(feedback)} />
-              {
-                /* eslint-disable-next-line jsx-a11y/anchor-is-valid */
-                <Link />
-              }
+              <AgileLinks />
             </div>
             <Profile />
           </div>
@@ -58,8 +80,7 @@ class Result extends React.Component {
 }
 
 Result.propTypes = {
-  evaluations: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  surveyId: PropTypes.string.isRequired,
+  surveyResult: PropTypes.string.isRequired,
 };
 
 export default Result;
