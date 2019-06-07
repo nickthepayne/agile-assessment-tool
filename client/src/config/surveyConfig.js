@@ -41,7 +41,6 @@ const generateQuestionConfig = (question) => {
   return questionConfig;
 };
 
-// eslint-disable-next-line import/prefer-default-export
 export const generateSurveyConfig = (config) => ({
   showProgressBar: 'top',
   questionTitleTemplate: '{title}',
