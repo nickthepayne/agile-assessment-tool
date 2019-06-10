@@ -72,7 +72,10 @@ export default class App extends Component {
     switch (pageState) {
     case PageState.WELCOME:
       return (
-        <div id="pagecontent">
+        <div
+          id="pagecontent"
+          className="center github-content mobile-padding row zue-teaser-medium-boxes zue-boxes-container ng-scope"
+        >
           <div className="columns">
             <h5>
                 We&apos;ve created this survey for people currently working on or with agile teams
