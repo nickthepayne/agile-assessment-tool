@@ -9,10 +9,11 @@ import Footer from './components/Footer';
 import AgileAssessment from './components/AgileAssessment';
 import Result from './components/Result';
 
-const PageState = {
+export const PageState = {
+  LOADING: 'LOADING',
+  WELCOME: 'WELCOME',
   SURVEY: 'SURVEY',
   EVALUATION: 'EVALUATION',
-  LOADING: 'LOADING',
 };
 
 export default class App extends Component {
@@ -26,11 +27,12 @@ export default class App extends Component {
       surveyResult: undefined,
     };
 
-    this.loadSurveyConfig();
+    this.startSurvey = this.startSurvey.bind(this);
   }
 
   componentDidMount() {
     Analytics.setUp();
+    this.showWelcomePage();
   }
 
   onComplete(result) {
@@ -68,6 +70,14 @@ export default class App extends Component {
     const { pageState, surveyConfig, surveyResult } = this.state;
 
     switch (pageState) {
+    case PageState.WELCOME:
+      return (
+        <div id="pagecontent" className="welcome">
+          <button type="button" id="start-survey" onClick={this.startSurvey}>
+              Start Survey
+          </button>
+        </div>
+      );
     case PageState.EVALUATION:
       return <Result surveyResult={surveyResult} />;
     case PageState.LOADING:
@@ -85,6 +95,16 @@ export default class App extends Component {
     }
   }
 
+  startSurvey() {
+    this.loadSurveyConfig().then(() => {
+      this.setState((prevState) => ({
+        ...prevState,
+        showBanner: true,
+        pageState: PageState.SURVEY,
+      }));
+    });
+  }
+
   async loadSurveyConfig() {
     try {
       if (!this.surveyConfig) {
@@ -96,7 +116,7 @@ export default class App extends Component {
         this.setState((prevState) => ({
           ...prevState,
           surveyConfig,
-          pageState: PageState.SURVEY,
+          pageState: PageState.LOADING,
         }));
       }
     } catch (err) {
@@ -104,13 +124,21 @@ export default class App extends Component {
     }
   }
 
+  showWelcomePage() {
+    this.setState((prevState) => ({
+      ...prevState,
+      showBanner: true,
+      pageState: PageState.WELCOME,
+    }));
+  }
+
   render() {
-    const { showBanner } = this.state;
+    const { showBanner, pageState } = this.state;
     const content = this.getContent();
 
     return (
       <div id="outer">
-        <Header showBanner={showBanner} />
+        <Header showBanner={showBanner} pageState={pageState} />
         {content}
         <Footer />
       </div>
