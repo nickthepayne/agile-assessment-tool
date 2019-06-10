@@ -54,8 +54,7 @@ class Result extends React.Component {
   }
 
   render() {
-    const { evaluations, contact } = this.state;
-    console.log(contact);
+    const { evaluations } = this.state;
     return (
       <div
         id="pagecontent"
