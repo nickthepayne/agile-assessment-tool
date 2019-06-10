@@ -28,7 +28,7 @@ class Result extends React.Component {
 
     const contact = Object.keys(surveyResult)
       .filter((key) => key.split('__')[0] === 'contact')
-      .map((key) => (surveyResult[key]))[0];
+      .map((key) => surveyResult[key])[0];
 
     this.setState((prevState) => ({
       ...prevState,
@@ -79,7 +79,7 @@ class Result extends React.Component {
 }
 
 Result.propTypes = {
-  surveyResult: PropTypes.string.isRequired,
+  surveyResult: PropTypes.shape({}).isRequired,
 };
 
 export default Result;
