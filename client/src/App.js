@@ -72,7 +72,10 @@ export default class App extends Component {
     switch (pageState) {
     case PageState.WELCOME:
       return (
-        <div id="pagecontent" className="welcome">
+        <div
+          id="pagecontent"
+          className="center github-content mobile-padding row zue-teaser-medium-boxes zue-boxes-container ng-scope"
+        >
           <button type="button" id="start-survey" onClick={this.startSurvey}>
               Start Survey
           </button>
