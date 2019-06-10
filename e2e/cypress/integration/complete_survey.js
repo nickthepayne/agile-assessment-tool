@@ -12,14 +12,31 @@ describe('Complete Survey', () => {
     cy.route('POST', '/api/survey').as('postSurvey');
   });
 
-  it('display 1st and 2nd question on page load', () => {
+  it('display start survey button on page load', () => {
     cy.visit('/');
+    cy.get('button[id="start-survey"').should('be.visible');
+  });
+
+  it('display welcome banner on load', () => {
+    cy.contains(
+      "We've created this survey for people currently working on or with agile teams as a lighthearted way to gain some insights and ideas for potential improvements in line with the continuous improvement at the heart of every true agilist.",
+    ).should('be.visible');
+  });
+
+  it('display 1st and 2nd question on start survey', () => {
+    cy.get('button[id="start-survey"').click();
     cy.contains(
       'Is your organisation currently practicing plan-driven or agile software development?',
     ).should('be.visible');
     cy.contains('How happy are you with your current software development process?').should(
       'be.visible',
     );
+  });
+
+  it('display survey banner on start survey', () => {
+    cy.contains(
+      "Our self-assessment tool will provide some insights into the agility of your organisation. Be honest - we won't judge!",
+    ).should('be.visible');
   });
 
   it('should not display glitchy numbering', () => {
