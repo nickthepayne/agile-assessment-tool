@@ -4,6 +4,7 @@ const _app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
+const axios = require('axios');
 const surveyReader = require('./surveys/surveyReader');
 
 _app.use(bodyParser.json()); // support json encoded bodies
@@ -29,7 +30,30 @@ async function app(dbClient) {
   _app.post('/api/survey', (req, res) => onPostSurveyResult(dbClient, req, res));
   _app.post('/api/feedback', (req, res) => onPostFeedback(dbClient, req, res));
   _app.get('/api/surveyconfig', (req, res) => onGetSurveyConfig(req, res));
+  _app.post('/api/verifycaptcha', (req, res) => onPostVerifyCaptcha(req, res));
   return _app;
+}
+
+async function onPostVerifyCaptcha(req, res) {
+  const token = req.body.recaptchaToken;
+
+  if (!token) {
+    return res.status(200).json({ success: false });
+  }
+
+  try {
+    const verification = await axios.post('https://www.google.com/recaptcha/api/siteverify', null, {
+      params: {
+        secret: '6Ld4zaYUAAAAAEVyyNM9WuF_VJy6LHQOfV_uv_N5',
+        response: token,
+      },
+    });
+
+    return res.status(200).json(verification.data);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send(err);
+  }
 }
 
 async function onPostFeedback(db, req, res) {
@@ -41,10 +65,10 @@ async function onPostFeedback(db, req, res) {
     };
 
     await db.collection('feedbacks').insertOne(feedback);
-    res.sendStatus(200);
+    return res.sendStatus(200);
   } catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    return res.status(500).send(err);
   }
 }
 
@@ -57,10 +81,10 @@ async function onPostSurveyResult(db, req, res) {
     };
 
     await db.collection('userscores').insertOne(surveyResult);
-    res.sendStatus(200);
+    return res.sendStatus(200);
   } catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    return res.status(500).send(err);
   }
 }
 

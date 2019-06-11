@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import * as Survey from 'survey-react';
 
@@ -28,14 +29,56 @@ class AgileAssessment extends React.Component {
 
     this.state = {
       model: new Survey.Model(config),
+      recaptchaToken: undefined,
     };
 
     this.handleCurrentPageChanged = this.handleCurrentPageChanged.bind(this);
+    this.verifyCaptcha = this.verifyCaptcha.bind(this);
+  }
+
+  componentDidMount() {
+    this.setupRecaptcha();
   }
 
   shouldComponentUpdate() {
     const { config } = this.props;
     return !config;
+  }
+
+  setupRecaptcha() {
+    window.onloadCallback = () => {
+      window.grecaptcha.render('recaptcha', {
+        sitekey: '6Ld4zaYUAAAAAPq3z85fmSDOHct0_mibZhPHcJYM',
+        callback: (token) => {
+          this.setState((prevState) => ({
+            ...prevState,
+            recaptchaToken: token,
+          }));
+        },
+      });
+    };
+  }
+
+  async verifyCaptcha(survey, options) {
+    const { recaptchaToken } = this.state;
+
+    if (!this.isOnLastPage()) {
+      options.complete();
+      return;
+    }
+
+    try {
+      const result = await axios.post('api/verifycaptcha', { recaptchaToken });
+      if (!result.data.success) {
+        // eslint-disable-next-line no-alert
+        alert('Please complete the reCAPTCHA');
+        return;
+      }
+
+      options.complete();
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   handleCurrentPageChanged() {
@@ -61,6 +104,7 @@ class AgileAssessment extends React.Component {
           <Survey.Survey
             model={model}
             onComplete={onComplete}
+            onServerValidateQuestions={this.verifyCaptcha}
             onCurrentPageChanged={this.handleCurrentPageChanged}
             onValueChanged={onValueChange}
           />
