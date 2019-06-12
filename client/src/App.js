@@ -28,6 +28,7 @@ export default class App extends Component {
     };
 
     this.startSurvey = this.startSurvey.bind(this);
+    this.onValueChange = this.onValueChange.bind(this);
   }
 
   componentDidMount() {

@@ -13,6 +13,16 @@ import 'bootstrap-slider/dist/css/bootstrap-slider.css';
 import 'select2/dist/js/select2.js';
 
 class AgileAssessment extends React.Component {
+  componentDidMount() {
+    const script = document.createElement('script');
+
+    script.src = 'https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit';
+    script.async = true;
+    script.defer = true;
+
+    document.body.appendChild(script);
+  }
+
   shouldComponentUpdate() {
     const { config } = this.props;
     return !config;
@@ -27,14 +37,8 @@ class AgileAssessment extends React.Component {
 
     return (
       <div id="pagecontent">
-        <div
-          className="github-content mobile-padding row zue-teaser-medium-boxes zue-boxes-container ng-scope"
-        >
-          <Survey.Survey
-            model={model}
-            onComplete={onComplete}
-            onValueChanged={onValueChange}
-          />
+        <div className="github-content mobile-padding row zue-teaser-medium-boxes zue-boxes-container ng-scope">
+          <Survey.Survey model={model} onComplete={onComplete} onValueChanged={onValueChange} />
         </div>
       </div>
     );
