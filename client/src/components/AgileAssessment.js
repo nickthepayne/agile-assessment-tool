@@ -4,6 +4,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import * as Survey from 'survey-react';
 
+
 import 'bootstrap/dist/css/bootstrap.css';
 import 'survey-react/survey.css';
 import 'nouislider/distribute/nouislider.css';
@@ -49,8 +50,8 @@ class AgileAssessment extends React.Component {
     window.onloadCallback = () => {
       window.grecaptcha.render('recaptcha', {
         sitekey: ['development', 'test'].includes(process.env.NODE_ENV)
-          ? '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
-          : '6Ld4zaYUAAAAAPq3z85fmSDOHct0_mibZhPHcJYM',
+          ? process.env.REACT_APP_TEST_SITE_KEY
+          : process.env.REACT_APP_SITE_KEY,
         callback: (token) => {
           this.setState((prevState) => ({
             ...prevState,

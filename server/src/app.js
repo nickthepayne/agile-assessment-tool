@@ -2,6 +2,8 @@ const express = require('express');
 
 // eslint-disable-next-line no-underscore-dangle
 const _app = express();
+
+const dotenv = require('dotenv').config();
 const path = require('path');
 const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
@@ -40,8 +42,8 @@ async function onPostVerifyCaptcha(req, res) {
       params: {
         secret:
           process.env.NODE_ENV === 'test'
-            ? '6Ld4zaYUAAAAAEVyyNM9WuF_VJy6LHQOfV_uv_N5'
-            : '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe',
+            ? process.env.SECRET_KEY
+            : process.env.TEST_SECRET_KEY,
         response: token,
       },
     });
