@@ -9,10 +9,11 @@ import Footer from './components/Footer';
 import AgileAssessment from './components/AgileAssessment';
 import Result from './components/Result';
 
-const PageState = {
+export const PageState = {
+  LOADING: 'LOADING',
+  WELCOME: 'WELCOME',
   SURVEY: 'SURVEY',
   EVALUATION: 'EVALUATION',
-  LOADING: 'LOADING',
 };
 
 export default class App extends Component {
@@ -26,11 +27,12 @@ export default class App extends Component {
       surveyResult: undefined,
     };
 
-    this.loadSurveyConfig();
+    this.startSurvey = this.startSurvey.bind(this);
   }
 
   componentDidMount() {
     Analytics.setUp();
+    this.showWelcomePage();
   }
 
   onComplete(result) {
@@ -68,6 +70,29 @@ export default class App extends Component {
     const { pageState, surveyConfig, surveyResult } = this.state;
 
     switch (pageState) {
+    case PageState.WELCOME:
+      return (
+        <div
+          id="pagecontent"
+          className="center github-content mobile-padding row zue-teaser-medium-boxes zue-boxes-container ng-scope"
+        >
+          <div className="columns">
+            <h5>
+                We&apos;ve created this survey for people currently working on or with agile teams
+                as a lighthearted way to gain some insights and ideas for potential improvements in
+                line with the continuous improvement at the heart of every true agilist.
+            </h5>
+            <h5>
+                If your company is not currently working in an agile way, get in touch with us to
+                find out what your organisation can gain from iterative development led by customer
+                feedback.
+            </h5>
+            <button type="button" id="start-survey" onClick={this.startSurvey}>
+                Start Survey
+            </button>
+          </div>
+        </div>
+      );
     case PageState.EVALUATION:
       return <Result surveyResult={surveyResult} />;
     case PageState.LOADING:
@@ -85,6 +110,16 @@ export default class App extends Component {
     }
   }
 
+  startSurvey() {
+    this.loadSurveyConfig().then(() => {
+      this.setState((prevState) => ({
+        ...prevState,
+        showBanner: true,
+        pageState: PageState.SURVEY,
+      }));
+    });
+  }
+
   async loadSurveyConfig() {
     try {
       if (!this.surveyConfig) {
@@ -96,12 +131,20 @@ export default class App extends Component {
         this.setState((prevState) => ({
           ...prevState,
           surveyConfig,
-          pageState: PageState.SURVEY,
+          pageState: PageState.LOADING,
         }));
       }
     } catch (err) {
       console.error(err);
     }
+  }
+
+  showWelcomePage() {
+    this.setState((prevState) => ({
+      ...prevState,
+      showBanner: false,
+      pageState: PageState.WELCOME,
+    }));
   }
 
   render() {
