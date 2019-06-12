@@ -1,5 +1,6 @@
 const express = require('express');
 
+// eslint-disable-next-line no-underscore-dangle
 const _app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -20,18 +21,11 @@ function onGetSurveyConfig(req, res) {
   let env = process.env.NODE_ENV;
 
   if (req.query && req.query.env) {
+    // eslint-disable-next-line prefer-destructuring
     env = req.query.env;
   }
 
   res.json(surveyReader.readSurveyConfig(env));
-}
-
-async function app(dbClient) {
-  _app.post('/api/survey', (req, res) => onPostSurveyResult(dbClient, req, res));
-  _app.post('/api/feedback', (req, res) => onPostFeedback(dbClient, req, res));
-  _app.get('/api/surveyconfig', (req, res) => onGetSurveyConfig(req, res));
-  _app.post('/api/verifycaptcha', (req, res) => onPostVerifyCaptcha(req, res));
-  return _app;
 }
 
 async function onPostVerifyCaptcha(req, res) {
@@ -89,6 +83,14 @@ async function onPostSurveyResult(db, req, res) {
     console.error(err);
     return res.status(500).send(err);
   }
+}
+
+async function app(dbClient) {
+  _app.post('/api/survey', (req, res) => onPostSurveyResult(dbClient, req, res));
+  _app.post('/api/feedback', (req, res) => onPostFeedback(dbClient, req, res));
+  _app.get('/api/surveyconfig', (req, res) => onGetSurveyConfig(req, res));
+  _app.post('/api/verifycaptcha', (req, res) => onPostVerifyCaptcha(req, res));
+  return _app;
 }
 
 module.exports = app;
