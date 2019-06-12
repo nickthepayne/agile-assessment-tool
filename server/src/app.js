@@ -44,7 +44,10 @@ async function onPostVerifyCaptcha(req, res) {
   try {
     const verification = await axios.post('https://www.google.com/recaptcha/api/siteverify', null, {
       params: {
-        secret: '6Ld4zaYUAAAAAEVyyNM9WuF_VJy6LHQOfV_uv_N5',
+        secret:
+          process.env.NODE_ENV === 'test'
+            ? '6Ld4zaYUAAAAAEVyyNM9WuF_VJy6LHQOfV_uv_N5'
+            : '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe',
         response: token,
       },
     });

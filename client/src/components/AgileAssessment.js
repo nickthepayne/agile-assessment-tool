@@ -48,7 +48,9 @@ class AgileAssessment extends React.Component {
   setupRecaptcha() {
     window.onloadCallback = () => {
       window.grecaptcha.render('recaptcha', {
-        sitekey: '6Ld4zaYUAAAAAPq3z85fmSDOHct0_mibZhPHcJYM',
+        sitekey: ['development', 'test'].includes(process.env.NODE_ENV)
+          ? '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
+          : '6Ld4zaYUAAAAAPq3z85fmSDOHct0_mibZhPHcJYM',
         callback: (token) => {
           this.setState((prevState) => ({
             ...prevState,
