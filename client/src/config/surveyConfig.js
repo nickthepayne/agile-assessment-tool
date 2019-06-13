@@ -38,6 +38,10 @@ const generateQuestionConfig = (question) => {
     questionConfig.description = question.description;
   }
 
+  if (question.html) {
+    questionConfig.html = question.html;
+  }
+
   return questionConfig;
 };
 

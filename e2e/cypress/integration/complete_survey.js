@@ -99,9 +99,13 @@ describe('Complete Survey', () => {
   });
 
   it('display results page on submission of contact details', () => {
+    cy.server();
+    cy.route({ method: 'POST', url: 'api/verifycaptcha', response: { success: true } });
+
     cy.get('input[aria-label="Company Name"').type('Zuhlke');
     cy.get('input[aria-label="Email"').type('example@zuhlke.com');
     cy.get('input[value="Complete"]').click();
+
     cy.contains('Thank you for participating!');
   });
 

@@ -94,10 +94,7 @@
           "category": "scrum",
           "name": "ifScrum",
           "question": "Do teams in your organisation use Scrum?",
-          "choices": [
-            "Yes",
-            "No"
-          ],
+          "choices": ["Yes", "No"],
           "colCount": 0
         },
         {
@@ -153,6 +150,11 @@
               "name": "Email"
             }
           ]
+        },
+        {
+          "type": "html",
+          "name": "recaptcha",
+          "html": "<div id='recaptcha'></div>"
         }
       ]
     }

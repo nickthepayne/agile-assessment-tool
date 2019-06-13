@@ -1,7 +1,8 @@
 const request = require('supertest');
+const fs = require('fs');
+// eslint-disable-next-line no-underscore-dangle
 const _app = require('./app');
 const { connectToDb, closeDb } = require('./db');
-const fs = require('fs');
 
 let db;
 let server;
@@ -86,6 +87,16 @@ describe('The /api/feedback path', () => {
             done();
           });
       });
+  });
+});
+
+describe('The /api/verifycaptcha path', () => {
+  test('null token should return false', (done) => {
+    request(server)
+      .post('/api/verifycaptcha')
+      .send({ recaptchaToken: '' })
+      .set('Accept', 'application/json')
+      .expect(200, { success: false }, done);
   });
 });
 

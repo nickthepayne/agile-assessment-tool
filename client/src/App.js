@@ -28,6 +28,7 @@ export default class App extends Component {
     };
 
     this.startSurvey = this.startSurvey.bind(this);
+    this.onValueChange = this.onValueChange.bind(this);
   }
 
   componentDidMount() {
@@ -35,7 +36,7 @@ export default class App extends Component {
     this.showWelcomePage();
   }
 
-  onComplete(result) {
+  async onComplete(result) {
     this.setState((prevState) => ({
       ...prevState,
       pageState: PageState.LOADING,
@@ -47,9 +48,14 @@ export default class App extends Component {
     };
 
     try {
-      axios.post('api/survey', surveyResult);
+      await axios.post('api/survey', surveyResult);
     } catch (err) {
+      this.setState((prevState) => ({
+        ...prevState,
+        pageState: PageState.SURVEY,
+      }));
       console.error(err);
+      return;
     }
 
     this.setState((prevState) => ({
@@ -103,7 +109,8 @@ export default class App extends Component {
           <AgileAssessment
             config={surveyConfig}
             onComplete={(result) => this.onComplete(result)}
-            onValueChange={() => this.onValueChange()}
+            onValueChange={this.onValueChange}
+            verifyCaptcha={this.verifyCaptcha}
           />
         )
       );

@@ -1,9 +1,13 @@
 const express = require('express');
 
+// eslint-disable-next-line no-underscore-dangle
 const _app = express();
+
+const dotenv = require('dotenv').config();
 const path = require('path');
 const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
+const axios = require('axios');
 const surveyReader = require('./surveys/surveyReader');
 
 _app.use(bodyParser.json()); // support json encoded bodies
@@ -19,17 +23,36 @@ function onGetSurveyConfig(req, res) {
   let env = process.env.NODE_ENV;
 
   if (req.query && req.query.env) {
+    // eslint-disable-next-line prefer-destructuring
     env = req.query.env;
   }
 
   res.json(surveyReader.readSurveyConfig(env));
 }
 
-async function app(dbClient) {
-  _app.post('/api/survey', (req, res) => onPostSurveyResult(dbClient, req, res));
-  _app.post('/api/feedback', (req, res) => onPostFeedback(dbClient, req, res));
-  _app.get('/api/surveyconfig', (req, res) => onGetSurveyConfig(req, res));
-  return _app;
+async function onPostVerifyCaptcha(req, res) {
+  const token = req.body.recaptchaToken;
+
+  if (!token) {
+    return res.status(200).json({ success: false });
+  }
+
+  try {
+    const verification = await axios.post('https://www.google.com/recaptcha/api/siteverify', null, {
+      params: {
+        secret:
+          process.env.NODE_ENV === 'test'
+            ? process.env.SECRET_KEY
+            : process.env.TEST_SECRET_KEY,
+        response: token,
+      },
+    });
+
+    return res.status(200).json(verification.data);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send(err);
+  }
 }
 
 async function onPostFeedback(db, req, res) {
@@ -41,10 +64,10 @@ async function onPostFeedback(db, req, res) {
     };
 
     await db.collection('feedbacks').insertOne(feedback);
-    res.sendStatus(200);
+    return res.sendStatus(200);
   } catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    return res.status(500).send(err);
   }
 }
 
@@ -57,11 +80,19 @@ async function onPostSurveyResult(db, req, res) {
     };
 
     await db.collection('userscores').insertOne(surveyResult);
-    res.sendStatus(200);
+    return res.sendStatus(200);
   } catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    return res.status(500).send(err);
   }
+}
+
+async function app(dbClient) {
+  _app.post('/api/survey', (req, res) => onPostSurveyResult(dbClient, req, res));
+  _app.post('/api/feedback', (req, res) => onPostFeedback(dbClient, req, res));
+  _app.get('/api/surveyconfig', (req, res) => onGetSurveyConfig(req, res));
+  _app.post('/api/verifycaptcha', (req, res) => onPostVerifyCaptcha(req, res));
+  return _app;
 }
 
 module.exports = app;
