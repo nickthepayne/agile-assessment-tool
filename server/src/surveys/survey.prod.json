@@ -835,7 +835,7 @@
         {
           "name": "contact",
           "type": "multipletext",
-          "question": "Optionally, you can leave some contact data here.",
+          "question": "Contact data",
           "description": "We would love to work with you!",
           "category": "contact",
           "items": [
