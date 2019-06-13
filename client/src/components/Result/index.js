@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import Evaluation from './Evaluation';
 import AgileLinks from './AgileLinks';
 import Profile from './Profile';
