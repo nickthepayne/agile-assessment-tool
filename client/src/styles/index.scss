@@ -45,10 +45,14 @@ div.small {
   width: 80%;
   background-color: #ffffff;
   border-color: $c-primary;
-}
 
-.progress-bar > span {
-  display: none;
+  .progress-bar {
+    margin: 0;
+
+    > span {
+      display: none;
+    }
+  }
 }
 
 .sv_qstn {
