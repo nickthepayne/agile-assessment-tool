@@ -845,7 +845,8 @@
             },
             {
               "name": "email",
-              "title": "Email"
+              "title": "Email",
+              "validators": [{ "type": "email" }]
             },
             {
               "name": "organisation",
