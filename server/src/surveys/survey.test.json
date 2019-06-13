@@ -1,10 +1,13 @@
 {
-  "pages": [{
-      "questions": [{
+  "pages": [
+    {
+      "questions": [
+        {
           "type": "radiogroup",
           "category": "agility",
           "question": "Is your organisation currently practicing plan-driven or agile software development?",
-          "choices": [{
+          "choices": [
+            {
               "value": 5,
               "text": "All Agile"
             },
@@ -30,7 +33,8 @@
           "type": "radiogroup",
           "category": "agility",
           "question": "How happy are you with your current software development process?",
-          "choices": [{
+          "choices": [
+            {
               "value": 5,
               "text": "Very happy"
             },
@@ -51,43 +55,46 @@
       ]
     },
     {
-      "questions": [{
-        "type": "dropdown",
-        "category": "estimation",
-        "question": "What units do you use for estimation?",
-        "choices": [{
-            "text": "Story Points",
-            "value": 5
-          },
-          {
-            "text": "Working Hours",
-            "value": 1
-          },
-          {
-            "text": "T-Shirt Sizes",
-            "value": 4
-          }
-        ]
-      }]
+      "questions": [
+        {
+          "type": "dropdown",
+          "category": "estimation",
+          "question": "What units do you use for estimation?",
+          "choices": [
+            {
+              "text": "Story Points",
+              "value": 5
+            },
+            {
+              "text": "Working Hours",
+              "value": 1
+            },
+            {
+              "text": "T-Shirt Sizes",
+              "value": 4
+            }
+          ]
+        }
+      ]
     },
     {
-      "questions": [{
-        "type": "rating",
-        "question": "How confident are you that your current project will be successful?",
-        "description": "1 means not confident at all, 5 means very confident",
-        "category": "mood"
-      }]
+      "questions": [
+        {
+          "type": "rating",
+          "question": "How confident are you that your current project will be successful?",
+          "description": "1 means not confident at all, 5 means very confident",
+          "category": "mood"
+        }
+      ]
     },
     {
-      "questions": [{
+      "questions": [
+        {
           "type": "radiogroup",
           "category": "scrum",
           "name": "ifScrum",
           "question": "Do teams in your organisation use Scrum?",
-          "choices": [
-            "Yes",
-            "No"
-          ],
+          "choices": ["Yes", "No"],
           "colCount": 0
         },
         {
@@ -95,7 +102,8 @@
           "category": "scrum",
           "visibleIf": "{scrum__ifScrum}='Yes'",
           "question": "How often do you reach your sprint goals?",
-          "choices": [{
+          "choices": [
+            {
               "value": 1,
               "text": "We do not define sprint goals"
             },
@@ -128,13 +136,14 @@
       ]
     },
     {
-      "questions": [{
-          "type": "multipletext", 
-          "name": "alskdjlasdf",
+      "questions": [
+        {
+          "type": "multipletext",
           "question": "Optionally, you can leave some contact data here.",
           "description": "We would love to work with you!",
           "category": "contact",
-          "items": [{
+          "items": [
+            {
               "name": "Company Name"
             },
             {

@@ -683,10 +683,7 @@
           "name": "ifScrum",
           "isRequired": true,
           "question": "Do teams in your organisation use Scrum?",
-          "choices": [
-            "Yes",
-            "No"
-          ],
+          "choices": ["Yes", "No"],
           "colCount": 0
         },
         {
@@ -854,12 +851,7 @@
           "type": "dropdown",
           "category": "info",
           "question": "Number of Employees",
-          "choices": [
-            "1-50",
-            "50-500",
-            "500-5000",
-            "5000+"
-          ]
+          "choices": ["1-50", "50-500", "500-5000", "5000+"]
         },
         {
           "type": "dropdown",
@@ -883,6 +875,11 @@
           "type": "text",
           "category": "info",
           "question": "Company Name (Optional)"
+        },
+        {
+          "type": "html",
+          "name": "recaptcha",
+          "html": "<div id='recaptcha'></div>"
         }
       ]
     }

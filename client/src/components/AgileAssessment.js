@@ -73,6 +73,8 @@ class AgileAssessment extends React.Component {
     try {
       const result = await axios.post('api/verifycaptcha', { recaptchaToken });
       if (!result.data.success) {
+        // TODO: Should use Surveyjs options.errors API to prevent completion
+        // https://surveyjs.io/Documentation/Library/?id=surveymodel#onServerValidateQuestions
         // eslint-disable-next-line no-alert
         alert('Please complete the reCAPTCHA');
         return;
