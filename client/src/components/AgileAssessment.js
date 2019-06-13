@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as Survey from 'survey-react';
+import showdown from 'showdown';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'survey-react/survey.css';
@@ -25,11 +26,21 @@ class AgileAssessment extends React.Component {
 
     const model = new Survey.Model(config);
 
+    const converter = new showdown.Converter();
+    model.onTextMarkdown.add((survey, options) => {
+      // convert the mardown text to html
+      let str = converter.makeHtml(options.text);
+      // remove root paragraphs <p></p>
+      str = str.substring(3);
+      str = str.substring(0, str.length - 4);
+      // set html
+      // eslint-disable-next-line no-param-reassign
+      options.html = str;
+    });
+
     return (
       <div id="pagecontent">
-        <div
-          className="github-content mobile-padding row zue-teaser-medium-boxes zue-boxes-container ng-scope"
-        >
+        <div className="github-content row">
           <Survey.Survey
             model={model}
             onComplete={onComplete}

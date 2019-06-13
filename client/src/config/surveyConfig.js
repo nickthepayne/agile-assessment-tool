@@ -4,6 +4,8 @@ export const questionType = {
   DROPDOWN: 'dropdown',
   RATING: 'rating',
   MULTIPLE_TEXT: 'multipletext',
+  CHECKBOX: 'checkbox',
+  HTML: 'html',
 };
 
 const generateQuestionConfig = (question) => {
@@ -26,12 +28,18 @@ const generateQuestionConfig = (question) => {
     questionConfig.colCount = question.colCount;
   }
 
-  if (question.type === questionType.RADIO || question.type === questionType.DROPDOWN) {
+  if (question.type === questionType.RADIO
+    || question.type === questionType.DROPDOWN
+    || question.type === questionType.CHECKBOX) {
     questionConfig.choices = question.choices;
   }
 
   if (question.type === questionType.MULTIPLE_TEXT) {
     questionConfig.items = question.items;
+  }
+
+  if (question.type === questionType.HTML) {
+    questionConfig.html = question.html;
   }
 
   if (question.description) {

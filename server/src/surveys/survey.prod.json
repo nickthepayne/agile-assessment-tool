@@ -799,11 +799,7 @@
               "text": "I don’t know"
             }
           ]
-        }
-      ]
-    },
-    {
-      "questions": [
+        },
         {
           "type": "radiogroup",
           "category": "additional",
@@ -829,6 +825,31 @@
             {
               "value": -1,
               "text": "I don’t know"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questions": [
+        {
+          "name": "contact",
+          "type": "multipletext",
+          "question": "Optionally, you can leave some contact data here.",
+          "description": "We would love to work with you!",
+          "category": "contact",
+          "items": [
+            {
+              "name": "name",
+              "title": "Name"
+            },
+            {
+              "name": "email",
+              "title": "Email"
+            },
+            {
+              "name": "organisation",
+              "title": "Organisation"
             }
           ]
         },
@@ -880,9 +901,14 @@
           "hasOther": true
         },
         {
-          "type": "text",
+          "type": "checkbox",
           "category": "info",
-          "question": "Company Name (Optional)"
+          "name": "privacy",
+          "question": "Privacy",
+          "isRequired": true,
+          "choices": [
+            "<span>I hereby confirm that I have read and accepted the </span><a href=\"https://www.zuehlke.com/ch/en/privacy-policy/\" target=\"_blank\">privacy policy</a><span> and </span><a href=\"https://www.zuehlke.com/ch/en/terms-use\" target=\"_blank\">terms of use</a><span>.</span></span>"
+          ]
         }
       ]
     }

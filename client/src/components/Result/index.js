@@ -15,29 +15,26 @@ class Result extends React.Component {
 
     this.scrollRef = React.createRef();
 
+    const { surveyResult } = props;
+
+    const contact = surveyResult.contact__contact;
+
     this.state = {
       evaluations: undefined,
-      contact: undefined,
+      contact,
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { surveyResult } = this.props;
 
     const evaluations = evaluateScore(surveyResult);
 
-    const contact = Object.keys(surveyResult)
-      .filter((key) => key.split('__')[0] === 'contact')
-      .map((key) => surveyResult[key])[0];
-
     this.setState((prevState) => ({
       ...prevState,
       evaluations,
-      contact,
     }));
-  }
 
-  componentDidMount() {
     // since we are not using a router, the scroll position is preserved when we change
     // the view, so we need to reset to the top of the content.
     const contentTop = this.scrollRef.offsetTop;
@@ -48,13 +45,9 @@ class Result extends React.Component {
     }
   }
 
-  async onSubmitFeedback(feedback) {
-    const { surveyResult } = this.props;
-    await axios.post('api/feedback', { ...feedback, surveyId: surveyResult.id });
-  }
-
   render() {
-    const { evaluations } = this.state;
+    const { surveyResult } = this.props;
+    const { evaluations, contact } = this.state;
     return (
       <div
         id="pagecontent"
@@ -67,7 +60,7 @@ class Result extends React.Component {
             <div className="result-left">
               <h3 className="color-primary">Thank you for participating!</h3>
               {evaluations && <Evaluation evaluations={evaluations} />}
-              <Feedback onSubmit={(feedback) => this.onSubmitFeedback(feedback)} />
+              <Feedback contact={contact} surveyId={surveyResult.id} />
               <AgileLinks />
             </div>
             <Profile />
@@ -79,7 +72,7 @@ class Result extends React.Component {
 }
 
 Result.propTypes = {
-  surveyResult: PropTypes.shape({}).isRequired,
+  surveyResult: PropTypes.element.isRequired,
 };
 
 export default Result;

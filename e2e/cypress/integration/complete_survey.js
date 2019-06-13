@@ -99,8 +99,10 @@ describe('Complete Survey', () => {
   });
 
   it('display results page on submission of contact details', () => {
-    cy.get('input[aria-label="Company Name"').type('Zuhlke');
-    cy.get('input[aria-label="Email"').type('example@zuhlke.com');
+    cy.get('input[aria-label="Name"]').type('Worker');
+    cy.get('input[aria-label="Email"]').type('example@zuhlke.com');
+    cy.get('input[aria-label="Organisation"]').type('Zuhlke');
+    cy.get('input[type=checkbox]').click();
     cy.get('input[value="Complete"]').click();
     cy.contains('Thank you for participating!');
   });
@@ -134,10 +136,10 @@ describe('Complete Survey', () => {
   });
 
   it('display correct text on feedback submission', () => {
-    cy.get('input[name="email"]').type('test@example.com');
+    cy.contains('We\'d love to hear from you!').not();
     cy.get('textarea[name="feedback"]').type('This was a great survey!');
-    cy.get('#privacy-agreement').click();
     cy.get('button[type="submit"]').click();
     cy.contains('Thank you for your feedback!');
+    cy.contains('We&apos;d love to hear from you!').should('not.exist');
   });
 });

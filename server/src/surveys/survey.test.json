@@ -141,17 +141,81 @@
     {
       "questions": [
         {
+          "name": "contact",
           "type": "multipletext",
           "question": "Optionally, you can leave some contact data here.",
           "description": "We would love to work with you!",
           "category": "contact",
           "items": [
             {
-              "name": "Company Name"
+              "name": "name",
+              "title": "Name"
             },
             {
-              "name": "Email"
+              "name": "email",
+              "title": "Email"
+            },
+            {
+              "name": "organisation",
+              "title": "Organisation"
             }
+          ]
+        },
+        {
+          "type": "dropdown",
+          "category": "info",
+          "question": "Which industry is your organisation primarily in?",
+          "choices": [
+            "Industrial Manufacturing",
+            "Consumer Manufacturing",
+            "Construction",
+            "Health & Pharmaceuticals",
+            "Transportation and Logistics",
+            "Information, Media and Communications",
+            "Finance and Insurance",
+            "Business Services",
+            "Public Administration"
+          ],
+          "colCount": 2,
+          "hasOther": true
+        },
+        {
+          "type": "dropdown",
+          "category": "info",
+          "question": "Number of Employees",
+          "choices": [
+            "1-50",
+            "50-500",
+            "500-5000",
+            "5000+"
+          ]
+        },
+        {
+          "type": "dropdown",
+          "category": "info",
+          "question": "Your position in the organisation",
+          "choices": [
+            "Software engineer",
+            "Software architect",
+            "Quality Assurance Specialist",
+            "Business Analyst",
+            "Project Manager",
+            "Agile Coach / Scrum Master",
+            "Product Owner / Product Manager",
+            "Manager",
+            "Director",
+            "VP"
+          ],
+          "hasOther": true
+        },
+        {
+          "type": "checkbox",
+          "category": "info",
+          "name": "privacy",
+          "question": "Privacy",
+          "isRequired": true,
+          "choices": [
+            "<span>I hereby confirm that I have read and accepted the </span><a href=\"https://www.zuehlke.com/ch/en/privacy-policy/\" target=\"_blank\">privacy policy</a><span> and </span><a href=\"https://www.zuehlke.com/ch/en/terms-use\" target=\"_blank\">terms of use</a><span>.</span></span>"
           ]
         }
       ]
